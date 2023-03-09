@@ -17,8 +17,12 @@
  */
 typedef struct schedule
 {
+ 
+
     Queue *foreQueue;
     Queue *backQueue;
+    int timeStep;
+    char* testName;
     //TODO: Put the data for your schedule program here!
 
 

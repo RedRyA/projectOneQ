@@ -31,8 +31,17 @@ void printNames()
 schedule *createSchedule()
 {
     /* TODO: malloc space for a new schedule and initialize the data in it */
+    schedule* s;
+ 
+    s = (schedule *)malloc(sizeof(schedule));
 
-    return NULL; /* TODO: Replace with your return value */
+    s->foreQueue= createQueue();
+
+    s->backQueue=createQueue();
+
+    s->timeStep;
+    (printf("SCH TEST \n"));
+    return s; /* TODO: Replace with your return value */
 }
 
 /* isScheduleUnfinished
@@ -44,9 +53,25 @@ schedule *createSchedule()
  */
 bool isScheduleUnfinished(schedule *ps)
 {
+    printf("finished TEST \n");
+    bool emt;
+    if (isEmpty(ps->foreQueue) == false || isEmpty(ps->backQueue) == false)
+    {
+   
+        emt=true;
+        printf("Not Empty \n");
+    }
+    else
+    {
+    emt=false;
+    printf(" EMpty\n ");
+    }
+
+
+
     /* TODO: check if there are any process still in a queue.  Return TRUE if there is. */
 
-    return false; /* TODO: Replace with your return value */
+    return emt; /* TODO: Replace with your return value */
 }
 
 /* addNewProcessToSchedule
@@ -58,10 +83,50 @@ bool isScheduleUnfinished(schedule *ps)
  */
 void addNewProcessToSchedule(schedule *ps, char *processName, priority p)
 {
+// my process instance
+
+ process* pro;
+
+ // malloc process
+  pro= (process *)malloc(sizeof(process));
+
+  // process variable malloc'd
+ pro-> pName=(process*)malloc(sizeof(process));
+
+ printf("TEST addNEw2 \n");
+
+// processData* 
+pro->proData=(process*)malloc(sizeof(process));
+pro->pName=(process*)malloc(sizeof(process));
+ 
+if (p == FOREGROUND)
+{
+ pro->proData = initializeProcessData( processName);
+// pro->proData = initializeProcessData(pro->pName);
+    
+                        printf("TEST addNEw \n");
+     // printf("Process name = %c\n", pro->pName);
+    
+pro->pName=pro->proData;
+     enqueue(ps->foreQueue, pro->pName);
+     // enqueue(ps->foreQueue,pro->pName);
+      
+    printf("peek %c \n ",getNext(ps->foreQueue));
+
+}else
+{
+
+ pro->proData=initializeProcessData(pro->pName);
+    enqueue(ps->backQueue, pro->proData);
+
+ 
+}
+    
+return pro->proData;
     /* TODO: complete this function.
     The function "initializeProcessData" in processSimulator.c will be useful in completing this. */
 
-    free(processName); /* TODO: This is to prevent a memory leak but you should remove it once you create a process to put processName into */
+    // free(processName); /* TODO: This is to prevent a memory leak but you should remove it once you create a process to put processName into */
 }
 
 /* runNextProcessInSchedule
@@ -74,20 +139,33 @@ void addNewProcessToSchedule(schedule *ps, char *processName, priority p)
  */
 char *runNextProcessInSchedule(schedule *ps)
 {
+
+
     /* TODO: complete this function.
     The function "runProcess", "loadProcessData", and "freeProcessData"
+  
     in processSimulator.c will be useful in completing this.*/
-    char *ret = NULL;
-    int numSteps;
+int numSteps;
+   
+    //  freeProcessData();
 
+        char *ret = NULL;
+
+   
+// bool b = runProcess(processName , &ret, &numSteps ); 
     attemptPromote(ps); /* This will call your attemptPromote code. */
 
-    numSteps = 0; /* TODO: Replace 0 with the number of steps the next process should be run for. */
+    numSteps = 5; /* TODO: Replace 0 with the number of steps the next process should be run for. */
+  
+   dequeue(ps->foreQueue);
+  
+   
+  // runProcess(pName, &ret, numSteps);
 
-    /* your call to runProcess will look something like this: */
-    /* bool b = runProcess( <name of process>, &ret, &numSteps ); */
+   /* your call to runProcess will look something like this: */
+    
 
-    return ret; /* This will be the char* that runProcess stores in ret when you call it. */
+   // return ret; /* This will be the char* that runProcess stores in ret when you call it. */
 }
 
 /* attemptPromote
@@ -99,6 +177,7 @@ char *runNextProcessInSchedule(schedule *ps)
  */
 void attemptPromote(schedule *ps)
 {
+
     /* TODO: complete this function.
     The function "promoteProcess" in processSimulator.c will be useful in completing this. */
 }
@@ -112,7 +191,7 @@ void attemptPromote(schedule *ps)
  */
 void printSummary(schedule *ps)
 {
-    printf("TEST \n");
+   
     /* TODO: complete this function. */
     /* 1) The number of time steps you processed. */
     /* 2) The number processes that completed running. */
@@ -127,7 +206,7 @@ void printSummary(schedule *ps)
  */
 void freeSchedule(schedule *ps)
 {
-    
+
     /* TODO: free any data associated with the schedule as well as the schedule itself.
     the function "freeQueue" in queue.c will be useful in completing this. */
 }

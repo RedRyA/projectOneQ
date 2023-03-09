@@ -18,7 +18,13 @@ typedef struct processData{ int heap[  30        ]; char       PN21[       21];c
  */
 typedef struct process
 {
-    //TODO: Put the data for your process here!
+    char* pName;
+    char* initPdata;
+    int timeStep;
+  struct processData* proData ;
+ // struct processData proData;
+
+  // TODO: Put the data for your process here!
 
 }  process;
 

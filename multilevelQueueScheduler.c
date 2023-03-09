@@ -53,13 +53,11 @@ schedule *createSchedule()
  */
 bool isScheduleUnfinished(schedule *ps)
 {
-    printf("finished TEST \n");
     bool emt;
     if (isEmpty(ps->foreQueue) == false || isEmpty(ps->backQueue) == false)
     {
    
         emt=true;
-        printf("Not Empty \n");
     }
     else
     {
@@ -86,32 +84,25 @@ void addNewProcessToSchedule(schedule *ps, char *processName, priority p)
 // my process instance
 
  process* pro;
-
  // malloc process
   pro= (process *)malloc(sizeof(process));
-
   // process variable malloc'd
- pro-> pName=(process*)malloc(sizeof(process));
-
- printf("TEST addNEw2 \n");
 
 // processData* 
-pro->proData=(process*)malloc(sizeof(process));
-pro->pName=(process*)malloc(sizeof(process));
+pro->pName=processName;
  
 if (p == FOREGROUND)
 {
  pro->proData = initializeProcessData( processName);
 // pro->proData = initializeProcessData(pro->pName);
     
-                        printf("TEST addNEw \n");
      // printf("Process name = %c\n", pro->pName);
-    
-pro->pName=pro->proData;
-     enqueue(ps->foreQueue, pro->pName);
+     enqueue(ps->foreQueue,pro->pName);
      // enqueue(ps->foreQueue,pro->pName);
       
-    printf("peek %c \n ",getNext(ps->foreQueue));
+    printf("peek %s \n ",getNext(ps->foreQueue));
+
+
 
 }else
 {

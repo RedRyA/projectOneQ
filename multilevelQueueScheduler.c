@@ -100,21 +100,17 @@ if (p == FOREGROUND)
      // printf("Process name = %c\n", pro->pName);
      enqueue(ps->foreQueue,pro->pName);
      // enqueue(ps->foreQueue,pro->pName);
-      
-    printf("peek %s \n ",getNext(ps->foreQueue));
-
-
-
+      return pro->proData;
 }else
 {
 
- pro->proData=initializeProcessData(pro->pName);
-    enqueue(ps->backQueue, pro->proData);
+ pro->proData=initializeProcessData(processName);
+    enqueue(ps->backQueue, pro->pName);
 
- 
+    return pro->proData;
 }
     
-return pro->proData;
+
     /* TODO: complete this function.
     The function "initializeProcessData" in processSimulator.c will be useful in completing this. */
 
@@ -131,33 +127,38 @@ return pro->proData;
  */
 char *runNextProcessInSchedule(schedule *ps)
 {
+ 
+char *ret = NULL;
+int i;
+int numSteps=5;
+char* pName;
+attemptPromote(ps); /* This will call your attemptPromote code. */
 
+pName=(getNext(ps->foreQueue));
+
+loadProcessData(pName);
 
     /* TODO: complete this function.
     The function "runProcess", "loadProcessData", and "freeProcessData"
   
     in processSimulator.c will be useful in completing this.*/
-int numSteps;
-   
-    //  freeProcessData();
 
-        char *ret = NULL;
+    bool b = runProcess(pName, &ret, numSteps);
 
-   
-// bool b = runProcess(processName , &ret, &numSteps ); 
-    attemptPromote(ps); /* This will call your attemptPromote code. */
+// pnumsteps is how many steps it ran for
+//  bool b = runProcess(processName, &ret, &pnumSteps );
 
-    numSteps = 5; /* TODO: Replace 0 with the number of steps the next process should be run for. */
-  
-   dequeue(ps->foreQueue);
-  
-   
-  // runProcess(pName, &ret, numSteps);
+//  freeProcessData();
 
-   /* your call to runProcess will look something like this: */
-    
+numSteps = 5; /* TODO: Replace 0 with the number of steps the next process should be run for. */
 
-   // return ret; /* This will be the char* that runProcess stores in ret when you call it. */
+dequeue(ps->foreQueue);
+
+// runProcess(pName, &ret, numSteps);
+
+/* your call to runProcess will look something like this: */
+
+// return ret; /* This will be the char* that runProcess stores in ret when you call it. */
 }
 
 /* attemptPromote

@@ -99,6 +99,7 @@ if (p == FOREGROUND)
 
     // printf("Process name = %c\n", pro->pName);
     enqueue(ps->foreQueue, pro->proData);
+   
     // enqueue(ps->foreQueue,pro->pName);
     
 }else
@@ -133,16 +134,9 @@ char *runNextProcessInSchedule(schedule *ps)
 char *ret = NULL;
 int i;
 int numSteps=5;
-int pNumSteps=0;
-
+int pNumSteps;
+bool b;
 char* pName;
-process* pro;
-pro = (process *)malloc(sizeof(process));
-// process variable malloc'd
-
-// processData*
- 
-
 
 /* TODO: complete this function.
  The function "runProcess", "loadProcessData", and "freeProcessData"
@@ -150,17 +144,27 @@ pro = (process *)malloc(sizeof(process));
 // pName=getNext(ps->foreQueue);
 
 
- pName=dequeue(ps->foreQueue);
-printf("pName %s\n",pName);
- loadProcessData(pName);
 
- //bool b = runProcess(pName, &ret, &numSteps ); 
+// pName = dequeue(ps->foreQueue);
+  pName = getNext(ps->foreQueue);
+
+ loadProcessData(pName);
+while(b==true){
+   
+printf("boool \n");
+ // b= runProcess(pName, &ret, numSteps );
+  // b = runProcess(pName, &ret, &numSteps);
+  // b = runProcess(pName, &ret,pNumSteps);
+   b = runProcess(pName, &ret,&pNumSteps);
+   printf("boool2 \n");
+}
+ 
   //  attemptPromote(ps); /* This will call your attemptPromote code. */
 
 /* your call to runProcess will look something like this: */
 
 
-return ret; /* This will be the char* that runProcess stores in ret when you call it. */
+//return ret; /* This will be the char* that runProcess stores in ret when you call it. */
 }
 
 /* attemptPromote

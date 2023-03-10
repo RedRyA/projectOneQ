@@ -94,27 +94,29 @@ pro->pName=processName;
  
 if (p == FOREGROUND)
 {
- pro->proData = initializeProcessData( processName);
-// pro->proData = initializeProcessData(pro->pName);
+    pro->proData = initializeProcessData(pro->pName);
+    // pro->proData = initializeProcessData(pro->pName);
+
+    // printf("Process name = %c\n", pro->pName);
+    enqueue(ps->foreQueue, pro->proData);
+    // enqueue(ps->foreQueue,pro->pName);
     
-     // printf("Process name = %c\n", pro->pName);
-     enqueue(ps->foreQueue,pro->pName);
-     // enqueue(ps->foreQueue,pro->pName);
-      return pro->proData;
 }else
 {
 
- pro->proData=initializeProcessData(processName);
-    enqueue(ps->backQueue, pro->pName);
+    pro->proData = initializeProcessData(pro->pName);
 
-    return pro->proData;
+    
+    enqueue(ps->backQueue, pro->proData);
+
+   
 }
     
-
-    /* TODO: complete this function.
+    /* TODO: complete this fun  ction.
     The function "initializeProcessData" in processSimulator.c will be useful in completing this. */
 
     // free(processName); /* TODO: This is to prevent a memory leak but you should remove it once you create a process to put processName into */
+ 
 }
 
 /* runNextProcessInSchedule
@@ -127,38 +129,38 @@ if (p == FOREGROUND)
  */
 char *runNextProcessInSchedule(schedule *ps)
 {
- 
+
 char *ret = NULL;
 int i;
 int numSteps=5;
+int pNumSteps=0;
+
 char* pName;
-attemptPromote(ps); /* This will call your attemptPromote code. */
+process* pro;
+pro = (process *)malloc(sizeof(process));
+// process variable malloc'd
 
-pName=(getNext(ps->foreQueue));
+// processData*
+ 
 
-loadProcessData(pName);
 
-    /* TODO: complete this function.
-    The function "runProcess", "loadProcessData", and "freeProcessData"
-  
-    in processSimulator.c will be useful in completing this.*/
+/* TODO: complete this function.
+ The function "runProcess", "loadProcessData", and "freeProcessData"
+ in processSimulator.c will be useful in completing this.*/
+// pName=getNext(ps->foreQueue);
 
-    bool b = runProcess(pName, &ret, numSteps);
 
-// pnumsteps is how many steps it ran for
-//  bool b = runProcess(processName, &ret, &pnumSteps );
+ pName=dequeue(ps->foreQueue);
+printf("pName %s\n",pName);
+ loadProcessData(pName);
 
-//  freeProcessData();
-
-numSteps = 5; /* TODO: Replace 0 with the number of steps the next process should be run for. */
-
-dequeue(ps->foreQueue);
-
-// runProcess(pName, &ret, numSteps);
+ //bool b = runProcess(pName, &ret, &numSteps ); 
+  //  attemptPromote(ps); /* This will call your attemptPromote code. */
 
 /* your call to runProcess will look something like this: */
 
-// return ret; /* This will be the char* that runProcess stores in ret when you call it. */
+
+return ret; /* This will be the char* that runProcess stores in ret when you call it. */
 }
 
 /* attemptPromote

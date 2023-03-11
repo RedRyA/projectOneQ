@@ -93,29 +93,19 @@ void addNewProcessToSchedule(schedule *ps, char *processName, priority p)
   
    if (p == FOREGROUND)
   {
+pro->priority=1;
 
  
         pro = initializeProcessData(pro->pName);
-//pro->proData=&pro;
-    
-    
-    //  pro->proData=initializeProcessData(pro->timeStep);
-    
-    enqueue(ps->foreQueue, pro);
-   printf("queue  %s",getNext(ps->foreQueue  ) );
-    //  pro->initPdata=initializeProcessData(pro->initPdata);
 
-    //   pro->proData=pro;
-    //  pro = initializeProcessData(pro->initPdata);
-
-    //  pro=initializeProcessData(pro->timeStep);
-    //  pro->proData = pro;
-
+        // pro->proData=&pro->pName;
+        //   pro=&pro->proData; and  enqueue(ps->foreQueue, &pro);give junk data but does run for 5 steos
+        //  pro = &pro->proData; and  enqueue(ps->foreQueue, pro); junk data runs infinite
+        pro = &pro->proData;
+        enqueue(ps->foreQueue, pro);
+        //  printf("queue  %s \n",pro->pName);
     
-   
-   
-                     
-    // enqueue(ps->foreQueue,pro->pName);
+ 
     
 }else
 {
@@ -176,9 +166,10 @@ char* initName;
  // b= runProcess(pName, &ret, numSteps );
 
  // b = runProcess(pName, &ret, &numSteps);
- 
+  pName=getNext(ps->foreQueue);
+  
 for(i=0;i<5;i++){
-    pName=dequeue(ps->foreQueue);
+   
  loadProcessData(pName);
  b = runProcess(pName, &ret, &pNumSteps);  
 

@@ -99,10 +99,9 @@ pro->priority=1;
         pro = initializeProcessData(pro->pName);
 
         // pro->proData=&pro->pName;
-        //   pro=&pro->proData; and  enqueue(ps->foreQueue, &pro);give junk data but does run for 5 steos
-        //  pro = &pro->proData; and  enqueue(ps->foreQueue, pro); junk data runs infinite
+        //   pro=&pro->proData; and  enqueue(ps->foreQueue, &pro);give junk data but does run for 5 steo
         pro = &pro->proData;
-        enqueue(ps->foreQueue, pro);
+        enqueue(ps->foreQueue, &pro);
         //  printf("queue  %s \n",pro->pName);
     
  

@@ -83,36 +83,34 @@ bool isScheduleUnfinished(schedule *ps)
 void addNewProcessToSchedule(schedule *ps, char *processName, priority p)
 {
 // my process instance
-
  process* pro;
  // malloc process
   pro= (process *)malloc(sizeof(process));
   // process variable malloc'd
-
   pro->pName =processName;
   
    if (p == FOREGROUND)
   {
-pro->priority=1;
+pro->priority=0;
+pro->numSteps=5;
 
+        pro->proData = initializeProcessData(pro->pName);
+        // pro=&pro->proData; junk data infinite loop
+        //   pro=&pro->proData; and  enqueue(ps->foreQueue, &pro);give junk data but does run for 5 steop
  
-        pro = initializeProcessData(pro->pName);
+        enqueue(ps->foreQueue,pro);
 
-        // pro->proData=&pro->pName;
-        //   pro=&pro->proData; and  enqueue(ps->foreQueue, &pro);give junk data but does run for 5 steo
-        pro = &pro->proData;
-        enqueue(ps->foreQueue, &pro);
+          
         //  printf("queue  %s \n",pro->pName);
     
- 
-    
-}else
+ } else if (p==BACKGROUND)
 {
-    pro->pName = initializeProcessData(processName);
-
-   // pro = initializeProcessData(pro->pName);
-   // pro->proData = &pro;
-    enqueue(ps->backQueue, pro);
+    pro->priority = 0;
+    //  pro = initializeProcessData(pro->pName);
+    //  pro = &pro->proData;
+     pro->proData = initializeProcessData(pro->pName);
+     
+      enqueue(ps->backQueue,pro);
 }
 
     /* TODO: complete this fun  ction.
@@ -136,49 +134,45 @@ char *runNextProcessInSchedule(schedule *ps)
 char *ret = NULL;
 int i;
 int numSteps=5;
-int pNumSteps=5;
+int pNumSteps;
 bool b;
 char* pName;
-char* initName;
-
+int* priority;
+char* pro;
 /* TODO: complete this function.
  The function "runProcess", "loadProcessData", and "freeProcessData"
  in processSimulator.c will be useful in completing this.*/
-// pName=getNext(ps->foreQueue);
+//pName=(char*)malloc(sizeof(char)*100);
 
 
+while(isEmpty(ps->foreQueue)==false){
+pro=getNext(ps->foreQueue);
+pName = getNext(ps->foreQueue)->pName;
+loadProcessData(getNext(ps->foreQueue)->proData);
 
-//pName = dequeue(ps->foreQueue);
- // pName = getNext(ps->foreQueue);
-
-
-
-//pNumSteps=(getNext(ps->foreQueue));
- 
-
- //pNumSteps=(getNext(ps->foreQueue));
-
- // loadProcessData(pNumSteps);
- // loadProcessData(ret);
-
- //   b = runProcess(pName, &ret,5);
- // b= runProcess(pName, &ret, numSteps );
-
- // b = runProcess(pName, &ret, &numSteps);
-  pName=getNext(ps->foreQueue);
-  
-for(i=0;i<5;i++){
-   
- loadProcessData(pName);
- b = runProcess(pName, &ret, &pNumSteps);  
+if(&pNumSteps>&numSteps){
+    printf("TEST \n");
+  b = runProcess(pName, &ret, &numSteps);    
+pNumSteps=pNumSteps-numSteps;
+  dequeue(ps->foreQueue);
+enqueue(ps->foreQueue,pro); 
 
 }
-        
+else
+ {
+     b = runProcess(pName, &ret, &pNumSteps);
+  
+ }
+
+ 
 
 
 
 
 
+}
+
+            
 
  
 
